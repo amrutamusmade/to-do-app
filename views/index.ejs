@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>To-Do List</h1>
+
+    <ul id="taskList"></ul>
+    
+    <form id="addTaskForm">
+        <input type="text" id="taskInput" placeholder="Enter task name" required>
+        <button type="submit">Add Task</button>
+    </form>
+    
+    
+
+    <script>
+        // Function to render tasks
+        const renderTasks = (tasks) => {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.textContent = task;
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', () => deleteTask(index));
+                li.appendChild(deleteButton);
+                taskList.appendChild(li);
+            });
+        };
+
+        // Function to add a new task
+        const addTask = () => {
+            const taskInput = document.getElementById('taskInput');
+            const task = taskInput.value.trim();
+            if (task !== '') {
+                tasks.push(task);
+                renderTasks(tasks);
+                taskInput.value = '';
+            }
+        };
+
+        // Function to delete a task
+        const deleteTask = (index) => {
+            tasks.splice(index, 1);
+            renderTasks(tasks);
+        };
+
+        // Array to store tasks
+        let tasks = [];
+
+        // Event listener for form submission
+        const addTaskForm = document.getElementById('addTaskForm');
+        addTaskForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            addTask();
+        });
+    </script>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>To-Do List</h1>
+    
+    <form action="/tasks" method="post">
+        <input type="text" name="task" placeholder="Enter task" required>
+        <button type="submit">Add Task</button>
+    </form>
+    
+    <ul>
+        <% tasks.forEach((task, index) => { %>
+            <li>
+                <%= task %>
+                <form action="/tasks/<%= index %>" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html> -->
